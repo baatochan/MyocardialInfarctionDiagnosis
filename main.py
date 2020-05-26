@@ -11,4 +11,4 @@ features = load_data.load_features()
 
 #print(X_best_features)
 
-cross_validation.run_crossvalid(X_features, Y_diagnosis, 3, 5)
+cross_validation.run_crossvalid(X_features, Y_diagnosis, 3, 5, 'manhattan')
