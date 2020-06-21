@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import math
 
 def run(benchmark_data, no_of_crossvalid_runs, no_of_folds):
     no_of_benchmark_scores = len(benchmark_data.index)
@@ -13,11 +14,31 @@ def run(benchmark_data, no_of_crossvalid_runs, no_of_folds):
             t_value = calculate_t(matrix_i, matrix_j, no_of_crossvalid_runs, no_of_folds)
 
             result.at[i, j] = t_value
-            result.at[j, i] = t_value*-1
+            result.at[j, i] = t_value * -1
 
     print(result)
 
 def calculate_t(matrix_i, matrix_j, no_of_crossvalid_runs, no_of_folds):
+    no_of_crossvalid_runs = matrix_i.shape[0]
+    no_of_folds = matrix_i.shape[1]
+
+    if ((matrix_i == matrix_j).all()):
+        return 0;
+
     matrix_s = matrix_i - matrix_j
     avg_matrix_s = np.mean(matrix_s)
-    return 420 # to be implemented
+    t_value = 0
+
+    for i in range(0, no_of_crossvalid_runs):
+        for j in range(0, no_of_folds):
+            sigma = matrix_s[i, j]
+            sigma = sigma - avg_matrix_s
+            sigma = sigma * sigma
+            sigma = sigma / ((no_of_folds * no_of_crossvalid_runs) - 1)
+            t_value = t_value + sigma
+
+    t_value = t_value * ((1 / (no_of_folds * no_of_crossvalid_runs)) + (1 / no_of_folds))
+    t_value = math.sqrt(t_value)
+    t_value = avg_matrix_s / t_value
+
+    return t_value
