@@ -18,7 +18,7 @@ def run_crossvalid(X_features, Y_diagnosis, n_splits, n_neighbors, k_best_featur
 
         X_train_best, X_test_best = select_features.select_k_best_features_train_and_test(X_train, Y_train, X_test, k_best_features)
 
-        knn = KNeighborsClassifier(n_neighbors=n_neighbors, metric=metric, n_jobs=-1)
+        knn = KNeighborsClassifier(n_neighbors=n_neighbors, metric=metric)
         knn.fit(X_train_best, Y_train.values.ravel())
 
         scores.append(knn.score(X_test_best, Y_test))
