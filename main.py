@@ -25,4 +25,5 @@ features = load_data.load_features()
 run_results = model_benchmark.run(X_features, Y_diagnosis, no_of_crossvalid_runs, no_of_folds)
 print(run_results)
 
-statistical_analysis.run(run_results, no_of_crossvalid_runs, no_of_folds)
+analysis_result = statistical_analysis.run(run_results, no_of_crossvalid_runs, no_of_folds)
+print(analysis_result)

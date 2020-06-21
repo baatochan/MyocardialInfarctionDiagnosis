@@ -16,7 +16,9 @@ def run(benchmark_data, no_of_crossvalid_runs, no_of_folds):
             result.at[i, j] = t_value
             result.at[j, i] = t_value * -1
 
-    print(result)
+    result_bool = check_critical_value(result)
+
+    return result_bool
 
 def calculate_t(matrix_i, matrix_j, no_of_crossvalid_runs, no_of_folds):
     no_of_crossvalid_runs = matrix_i.shape[0]
@@ -42,3 +44,20 @@ def calculate_t(matrix_i, matrix_j, no_of_crossvalid_runs, no_of_folds):
     t_value = avg_matrix_s / t_value
 
     return t_value
+
+def check_critical_value(matrix):
+    critical_value = 2.2622
+
+    matrix_size = len(matrix.index)
+    result = pd.DataFrame(np.zeros((matrix_size, matrix_size)))
+
+    for i in range(0, matrix_size):
+        for j in range(0, matrix_size):
+            if (matrix.at[i, j] > critical_value):
+                result.at[i, j] = 1
+            elif (matrix.at[i, j] < (-1 * critical_value)):
+                result.at[i, j] = -1
+            else:
+                result.at[i, j] = 0
+
+    return result
