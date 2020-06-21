@@ -2,6 +2,10 @@ import load_data
 import select_features
 import cross_validation
 import model_benchmark
+import statistical_analysis
+
+no_of_crossvalid_runs = 2
+no_of_folds = 5
 
 # load list of features from file. why? because i thought that putting this list in the txt file would be more useful than hardcoing into the array in python code.
 features = load_data.load_features()
@@ -18,5 +22,7 @@ features = load_data.load_features()
 #print(score)
 
 # run a function that tests diffrent set of parameters for knn cross_validation
-run_results = model_benchmark.run(X_features, Y_diagnosis)
+run_results = model_benchmark.run(X_features, Y_diagnosis, no_of_crossvalid_runs, no_of_folds)
 print(run_results)
+
+statistical_analysis.run(run_results, no_of_crossvalid_runs, no_of_folds)

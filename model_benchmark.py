@@ -6,15 +6,13 @@ import random
 # function that takes whole set of data (two DataFrames - X and Y) and runs cross_validation with diffrent parameters as needed in the project description. returns DataFrame with params and scores
 # Params: DataFrame, DataFrame
 # Returns: DataFrame
-def run(X_features, Y_diagnosis):
+def run(X_features, Y_diagnosis, no_of_crossvalid_runs, no_of_folds):
     columns=["n_splits", "metric", "k_best_features", "no_of_n_neighbors", "Score matrix", "Average"]
     run_results = pd.DataFrame(columns=columns)
 
     metrics = ["euclidean", "manhattan"]
     max_best_features = 35
     n_neighbors = [1, 5, 10]
-    no_of_crossvalid_runs = 2
-    no_of_folds = 5
 
     random_states = [420, 2137] # needs to be the size of no_of_crossvalid_runs
     check_random_states(random_states, no_of_crossvalid_runs)
