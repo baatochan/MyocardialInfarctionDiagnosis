@@ -17,6 +17,9 @@ def run(benchmark_data, no_of_crossvalid_runs, no_of_folds):
             result.at[j, i] = t_value * -1
 
     result_bool = check_critical_value(result)
+    sum_rows(result_bool)
+
+    result_bool.sort_values(by=['Sum'], ascending=False, inplace=True)
 
     return result_bool
 
@@ -61,3 +64,16 @@ def check_critical_value(matrix):
                 result.at[i, j] = 0
 
     return result
+
+def sum_rows(matrix):
+    result = [];
+    matrix_size = len(matrix.index)
+
+    for i in range(0, matrix_size):
+        sum = 0;
+        for j in range(0, matrix_size):
+            sum = sum + matrix.at[i, j]
+
+        result.append(sum)
+
+    matrix["Sum"] = result
