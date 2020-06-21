@@ -25,5 +25,10 @@ features = load_data.load_features()
 run_results = model_benchmark.run(X_features, Y_diagnosis, no_of_crossvalid_runs, no_of_folds)
 print(run_results)
 
-analysis_result = statistical_analysis.run(run_results, no_of_crossvalid_runs, no_of_folds)
+(analysis_result, benchmark_order) = statistical_analysis.run(run_results, no_of_crossvalid_runs, no_of_folds)
 print(analysis_result)
+
+run_results.sort_index(inplace=True)
+run_results["Wage"] = benchmark_order
+run_results.sort_values(by=['Wage'], ascending=False, inplace=True)
+print(run_results)

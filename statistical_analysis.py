@@ -17,11 +17,11 @@ def run(benchmark_data, no_of_crossvalid_runs, no_of_folds):
             result.at[j, i] = t_value * -1
 
     result_bool = check_critical_value(result)
-    sum_rows(result_bool)
+    benchmark_order = sum_rows(result_bool)
 
     result_bool.sort_values(by=['Sum'], ascending=False, inplace=True)
 
-    return result_bool
+    return (result_bool, benchmark_order)
 
 def calculate_t(matrix_i, matrix_j, no_of_crossvalid_runs, no_of_folds):
     no_of_crossvalid_runs = matrix_i.shape[0]
@@ -77,3 +77,5 @@ def sum_rows(matrix):
         result.append(sum)
 
     matrix["Sum"] = result
+
+    return result
