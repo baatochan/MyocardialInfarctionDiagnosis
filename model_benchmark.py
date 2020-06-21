@@ -11,10 +11,10 @@ def run(X_features, Y_diagnosis):
     for metric in ["euclidean", "manhattan"]:
         for k_best_features in range(1, 21): # 1 to 20
             for n_neighbors in [1, 5, 10]:
-                for run in range(5):
-                    random_states = [69, 420, 911, 1004, 2137]
-                    score = cross_validation.run_crossvalid(X_features, Y_diagnosis, 2, n_neighbors, k_best_features, metric, random_states[run])
+                for run in range(2):
+                    random_states = [420, 2137]
+                    score = cross_validation.run_crossvalid(X_features, Y_diagnosis, 5, n_neighbors, k_best_features, metric, random_states[run])
 
-                    run_results = run_results.append({"n_splits" : 2, "metric" : metric, "k_best_features" : k_best_features, "n_neighbors" : n_neighbors, "Crossvalid run" : run, "Scores" : score}, ignore_index=True)
+                    run_results = run_results.append({"n_splits" : 5, "metric" : metric, "k_best_features" : k_best_features, "n_neighbors" : n_neighbors, "Crossvalid run" : run, "Scores" : score}, ignore_index=True)
 
     return run_results
