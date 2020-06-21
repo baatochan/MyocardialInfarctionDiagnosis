@@ -7,11 +7,11 @@ import random
 # Params: DataFrame, DataFrame
 # Returns: DataFrame
 def run(X_features, Y_diagnosis):
-    columns=["n_splits", "metric", "k_best_features", "no_of_n_neighbors", "Scores", "Average"]
+    columns=["n_splits", "metric", "k_best_features", "no_of_n_neighbors", "Score matrix", "Average"]
     run_results = pd.DataFrame(columns=columns)
 
     metrics = ["euclidean", "manhattan"]
-    max_best_features = 20
+    max_best_features = 35
     n_neighbors = [1, 5, 10]
     no_of_crossvalid_runs = 2
     no_of_folds = 5
@@ -27,7 +27,11 @@ def run(X_features, Y_diagnosis):
                 for run in range(no_of_crossvalid_runs):
                     score_matrix[run] = cross_validation.run_crossvalid(X_features, Y_diagnosis, no_of_folds, no_of_n_neighbors, k_best_features, metric, random_states[run])
 
-                run_results = run_results.append({"n_splits" : no_of_folds, "metric" : metric, "k_best_features" : k_best_features, "no_of_n_neighbors" : no_of_n_neighbors, "Scores" : score_matrix}, ignore_index=True)
+                average = np.mean(score_matrix)
+
+                run_results = run_results.append({"n_splits" : no_of_folds, "metric" : metric, "k_best_features" : k_best_features, "no_of_n_neighbors" : no_of_n_neighbors, "Score matrix" : score_matrix, "Average" : average}, ignore_index=True)
+
+    run_results.sort_values(by=['Average'], ascending=False, inplace=True)
 
     return run_results
 
