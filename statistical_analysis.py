@@ -52,7 +52,7 @@ def check_critical_value(matrix):
     critical_value = 2.2622
 
     matrix_size = len(matrix.index)
-    result = pd.DataFrame(np.zeros((matrix_size, matrix_size)))
+    result = pd.DataFrame(np.zeros((matrix_size, matrix_size))).astype(int)
 
     for i in range(0, matrix_size):
         for j in range(0, matrix_size):
